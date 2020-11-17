@@ -32,7 +32,7 @@ def segment(image, threshold=25):
     # get the contours in the thresholded image
     (cnts, _) = cv2.findContours(thresholded.copy(),
                                  cv2.RETR_EXTERNAL,
-                                 cv2.CHAIN_APPROX_SIMPLE)
+                                 cv2.CHAIN_APPROX_NONE)
 
     # return None, if no contours detected
     if len(cnts) == 0:
@@ -82,8 +82,8 @@ def main():
 
             # convert the roi to grayscale and blur it
             gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-            gray = cv2.GaussianBlur(gray, (7, 7), 0)
-
+            # gray = cv2.GaussianBlur(gray, (7, 7), 0)
+            gray = cv2.Canny(gray ,50, 60)
             # to get the background, keep looking till a threshold is reached
             # so that our running average model gets calibrated
             if num_frames < 30:
@@ -105,7 +105,7 @@ def main():
                     if start_recording:
 
                         # Mention the directory in which you wanna store the images followed by the image name
-                        cv2.imwrite("Dataset/FistTest/fist_" +
+                        cv2.imwrite("Dataset/AImages/signA_" +
                                     str(image_num) + '.png', thresholded)
                         image_num += 1
                     cv2.imshow("Thesholded", thresholded)
@@ -123,7 +123,8 @@ def main():
             keypress = cv2.waitKey(1) & 0xFF
 
             # if the user pressed "q", then stop looping
-            if keypress == ord("q") or image_num > 100:
+            if keypress == ord("q") or image_num > 999:
+                camera.release()
                 break
 
             if keypress == ord("s"):
@@ -137,5 +138,4 @@ def main():
 main()
 
 # free up memory
-camera.release()
 cv2.destroyAllWindows()
