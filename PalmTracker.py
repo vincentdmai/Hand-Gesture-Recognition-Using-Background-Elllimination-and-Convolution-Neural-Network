@@ -105,10 +105,10 @@ def main():
                     if start_recording:
 
                         # Mention the directory in which you wanna store the images followed by the image name
-                        cv2.imwrite("Dataset/AImages/signA_" +
+                        cv2.imwrite("Dataset/DImages/signD_" +
                                     str(image_num) + '.png', thresholded)
                         image_num += 1
-                    cv2.imshow("Thesholded", thresholded)
+                    cv2.imshow("Thresholded", thresholded)
 
             # draw the segmented hand
             cv2.rectangle(clone, (left, top), (right, bottom), (0, 255, 0), 2)

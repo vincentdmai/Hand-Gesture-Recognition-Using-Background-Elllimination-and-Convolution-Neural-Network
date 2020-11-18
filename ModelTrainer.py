@@ -11,25 +11,25 @@ from sklearn.utils import shuffle
 loadedImages = []
 
 for i in range(0, 1000):
-    image = cv2.imread('Dataset/SwingImages/swing_' + str(i) + '.png')
+    image = cv2.imread('Dataset/AImages/signA_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
 #Load Images From Palm
 for i in range(0, 1000):
-    image = cv2.imread('Dataset/PalmImages/palm_' + str(i) + '.png')
+    image = cv2.imread('Dataset/BImages/signB_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
 #Load Images From Fist
 for i in range(0, 1000):
-    image = cv2.imread('Dataset/FistImages/fist_' + str(i) + '.png')
+    image = cv2.imread('Dataset/CImages/signC_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
 #Load Images From B
 for i in range(0, 1000):
-    image = cv2.imread('Dataset/BImages/signB_' + str(i) + '.png')
+    image = cv2.imread('Dataset/DImages/signD_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
@@ -60,24 +60,24 @@ testImages = []
 
 #Load Images for swing
 for i in range(0, 100):
-    image = cv2.imread('Dataset/SwingTest/swing_' + str(i) + '.png')
+    image = cv2.imread('Dataset/ATest/signA_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
 #Load Images for Palm
 for i in range(0, 100):
-    image = cv2.imread('Dataset/PalmTest/palm_' + str(i) + '.png')
+    image = cv2.imread('Dataset/BTest/signB_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
 #Load Images for Fist
 for i in range(0, 100):
-    image = cv2.imread('Dataset/FistTest/fist_' + str(i) + '.png')
+    image = cv2.imread('Dataset/CTest/signC_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
 for i in range(0, 100):
-    image = cv2.imread('Dataset/BTest/signB_' + str(i) + '.png')
+    image = cv2.imread('Dataset/DTest/signD_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
@@ -142,7 +142,7 @@ loadedImages, outputVectors = shuffle(loadedImages, outputVectors, random_state=
 
 # Train model
 #TODO: Change Epoch Back to 50
-model.fit(loadedImages, outputVectors, n_epoch=10,
+model.fit(loadedImages, outputVectors, n_epoch=50,
            validation_set = (testImages, testLabels),
            snapshot_step=100, show_metric=True, run_id='convnet_coursera')
 

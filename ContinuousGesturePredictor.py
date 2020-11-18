@@ -89,8 +89,8 @@ def main():
 
         # convert the roi to grayscale and blur it
         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (7, 7), 0)
-
+        # gray = cv2.GaussianBlur(gray, (7, 7), 0)
+        gray = cv2.Canny(gray ,50, 60)
         # to get the background, keep looking till a threshold is reached
         # so that our running average model gets calibrated
         if num_frames < 30:
@@ -112,7 +112,7 @@ def main():
                     resizeImage('Temp.png')
                     predictedClass, confidence = getPredictedClass()
                     showStatistics(predictedClass, confidence)
-                cv2.imshow("Thesholded", thresholded)
+                cv2.imshow("Thresholded", thresholded)
 
         # draw the segmented hand
         cv2.rectangle(clone, (left, top), (right, bottom), (0,255,0), 2)
@@ -146,13 +146,13 @@ def showStatistics(predictedClass, confidence):
     className = ""
 
     if predictedClass == 0:
-        className = "Swing"
+        className = "Sign A"
     elif predictedClass == 1:
-        className = "Palm"
+        className = "Sign B"
     elif predictedClass == 2:
-        className = "Fist"
+        className = "Sign C"
     elif predictedClass == 3:
-            className = "Sign B"
+            className = "Sign D"
 
     cv2.putText(textImage,"Predicted Class : " + className,
     (30, 30),
