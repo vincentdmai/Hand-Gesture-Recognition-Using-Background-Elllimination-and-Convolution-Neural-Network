@@ -89,7 +89,7 @@ def main():
 
         # convert the roi to grayscale and blur it
         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-        # gray = cv2.GaussianBlur(gray, (7, 7), 0)
+        gray = cv2.GaussianBlur(gray, (7, 7), 0)
         gray = cv2.Canny(gray ,50, 60)
         # to get the background, keep looking till a threshold is reached
         # so that our running average model gets calibrated
