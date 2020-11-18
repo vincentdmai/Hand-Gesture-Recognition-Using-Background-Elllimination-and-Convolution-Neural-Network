@@ -69,7 +69,7 @@ def main():
     start_recording = False
     start_typing = False
     currentPrint = ""
-
+    timer = 0;
     # keep looping, until interrupted
     while(True):
         # get the current frame
@@ -92,7 +92,7 @@ def main():
 
         # convert the roi to grayscale and blur it
         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (7, 7), 0)
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
         gray = cv2.Canny(gray ,50, 60)
         # to get the background, keep looking till a threshold is reached
         # so that our running average model gets calibrated
@@ -116,7 +116,7 @@ def main():
                     predictedClass, confidence = getPredictedClass()
                     if start_typing:
                         #Logic for telepromt here
-                        currentPrint = startTyping(predictedClass, confidence, currentPrint)
+                        currentPrint, timer = startTyping(predictedClass, confidence, currentPrint, timer)
                     else:
                         showStatistics(predictedClass, confidence)
                 cv2.imshow("Thresholded", thresholded)
@@ -136,7 +136,7 @@ def main():
         # if the user pressed "q", then stop looping
         if keypress == ord("q"):
             break
-        
+
         #Start guessing the image
         if keypress == ord("s"):
             start_recording = True
@@ -144,7 +144,7 @@ def main():
         #Start Guessing image and typeing to telepromter
         if keypress == ord("t"):
             start_typing = True
-        
+
         #Press c to clear
         if keypress == ord("c"):
             currentPrint = ""
@@ -153,20 +153,20 @@ def main():
         if keypress == 32:
             currentPrint += " "
 
-        
+
 
 def getPredictedClass():
     # Predict
     image = cv2.imread('Temp.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     prediction = model.predict([gray_image.reshape(89, 100, 1)])
-    #return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3] + prediction[0][4] \
-    #                                                    + prediction[0][5] + prediction[0][6] + prediction[0][7] + prediction[0][8]))
-    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1]  + prediction[0][2] + prediction[0][3]))
+    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3] + prediction[0][4] \
+                                                       + prediction[0][5] + prediction[0][6] + prediction[0][7] + prediction[0][8]))
+    #return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1]  + prediction[0][2] + prediction[0][3]))
 
 #Our own class for showing on the telepromt
-def startTyping(predictedClass, confidence, currentPrint):
-
+def startTyping(predictedClass, confidence, currentPrint, timer):
+    timer += 1
     textImage = np.zeros((512,512,3), np.uint8)
     addedLetter = ""
 
@@ -190,8 +190,9 @@ def startTyping(predictedClass, confidence, currentPrint):
         addedLetter = "i"
 
     #If Confident about letter added to print
-    if confidence >= .95:
+    if confidence >= .95 and timer > 60:
         currentPrint += addedLetter
+        timer = 0
 
     cv2.putText(textImage, currentPrint,
     (20, 20),
@@ -200,8 +201,7 @@ def startTyping(predictedClass, confidence, currentPrint):
     (255, 255, 255),
     2)
     cv2.imshow("Text", textImage)
-
-    return currentPrint
+    return currentPrint, timer
 
 def showStatistics(predictedClass, confidence):
 
@@ -272,7 +272,7 @@ convnet=fully_connected(convnet,1000,activation='relu')
 convnet=dropout(convnet,0.75)
 
 #TODO: change the second parameter to total number of classes
-convnet=fully_connected(convnet,4,activation='softmax')
+convnet=fully_connected(convnet,9,activation='softmax')
 
 convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
 
