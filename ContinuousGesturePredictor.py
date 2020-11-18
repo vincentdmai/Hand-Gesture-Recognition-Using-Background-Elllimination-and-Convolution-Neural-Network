@@ -8,6 +8,7 @@ from PIL import Image
 import cv2
 import imutils
 
+
 # global variables
 bg = None
 
@@ -66,6 +67,8 @@ def main():
     # initialize num of frames
     num_frames = 0
     start_recording = False
+    start_typing = False
+    currentPrint = ""
 
     # keep looping, until interrupted
     while(True):
@@ -107,11 +110,15 @@ def main():
 
                 # draw the segmented region and display the frame
                 cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
-                if start_recording:
+                if start_recording or start_typing:
                     cv2.imwrite('Temp.png', thresholded)
                     resizeImage('Temp.png')
                     predictedClass, confidence = getPredictedClass()
-                    showStatistics(predictedClass, confidence)
+                    if start_typing:
+                        #Logic for telepromt here
+                        currentPrint = startTyping(predictedClass, confidence, currentPrint)
+                    else:
+                        showStatistics(predictedClass, confidence)
                 cv2.imshow("Thresholded", thresholded)
 
         # draw the segmented hand
@@ -129,17 +136,72 @@ def main():
         # if the user pressed "q", then stop looping
         if keypress == ord("q"):
             break
-
+        
+        #Start guessing the image
         if keypress == ord("s"):
             start_recording = True
+
+        #Start Guessing image and typeing to telepromter
+        if keypress == ord("t"):
+            start_typing = True
+        
+        #Press c to clear
+        if keypress == ord("c"):
+            currentPrint = ""
+
+        #Press space to space
+        if keypress == 32:
+            currentPrint += " "
+
+        
 
 def getPredictedClass():
     # Predict
     image = cv2.imread('Temp.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     prediction = model.predict([gray_image.reshape(89, 100, 1)])
-    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3] + prediction[0][4] \
-                                                        + prediction[0][5] + prediction[0][6] + prediction[0][7] + prediction[0][8]))
+    #return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3] + prediction[0][4] \
+    #                                                    + prediction[0][5] + prediction[0][6] + prediction[0][7] + prediction[0][8]))
+    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1]  + prediction[0][2] + prediction[0][3]))
+
+#Our own class for showing on the telepromt
+def startTyping(predictedClass, confidence, currentPrint):
+
+    textImage = np.zeros((512,512,3), np.uint8)
+    addedLetter = ""
+
+    if predictedClass == 0:
+        addedLetter = "a"
+    elif predictedClass == 1:
+        addedLetter = "b"
+    elif predictedClass == 2:
+        addedLetter = "c"
+    elif predictedClass == 3:
+        addedLetter = "d"
+    elif predictedClass == 4:
+        addedLetter = "e"
+    elif predictedClass == 5:
+        addedLetter = "f"
+    elif predictedClass == 6:
+        addedLetter = "g"
+    elif predictedClass == 7:
+        addedLetter = "h"
+    elif predictedClass == 8:
+        addedLetter = "i"
+
+    #If Confident about letter added to print
+    if confidence >= .95:
+        currentPrint += addedLetter
+
+    cv2.putText(textImage, currentPrint,
+    (20, 20),
+    cv2.FONT_HERSHEY_SIMPLEX,
+    0.5,
+    (255, 255, 255),
+    2)
+    cv2.imshow("Text", textImage)
+
+    return currentPrint
 
 def showStatistics(predictedClass, confidence):
 
@@ -210,7 +272,7 @@ convnet=fully_connected(convnet,1000,activation='relu')
 convnet=dropout(convnet,0.75)
 
 #TODO: change the second parameter to total number of classes
-convnet=fully_connected(convnet,9,activation='softmax')
+convnet=fully_connected(convnet,4,activation='softmax')
 
 convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
 
