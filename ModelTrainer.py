@@ -7,97 +7,177 @@ import numpy as np
 import cv2
 from sklearn.utils import shuffle
 
-#Load Images from Swing
 loadedImages = []
 
+#Load Images From A
 for i in range(0, 1000):
     image = cv2.imread('Dataset/AImages/signA_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
-#Load Images From Palm
+#Load Images From B
 for i in range(0, 1000):
     image = cv2.imread('Dataset/BImages/signB_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
-#Load Images From Fist
+#Load Images From C
 for i in range(0, 1000):
     image = cv2.imread('Dataset/CImages/signC_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
-#Load Images From B
+#Load Images From D
 for i in range(0, 1000):
     image = cv2.imread('Dataset/DImages/signD_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     loadedImages.append(gray_image.reshape(89, 100, 1))
 
+#Load Images From E
+for i in range(0, 1000):
+    image = cv2.imread('Dataset/EImages/signE_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(89, 100, 1))
 
-# In[ ]:
+#Load Images From F
+for i in range(0, 1000):
+    image = cv2.imread('Dataset/FImages/signF_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(89, 100, 1))
 
+#Load Images From G
+for i in range(0, 1000):
+    image = cv2.imread('Dataset/GImages/signG_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(89, 100, 1))
+    
+#Load Images From H
+for i in range(0, 1000):
+    image = cv2.imread('Dataset/HImages/signH_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(89, 100, 1))
+
+#Load Images From I
+for i in range(0, 1000):
+    image = cv2.imread('Dataset/IImages/signI_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(89, 100, 1))
 
 # Create OutputVector
 
 outputVectors = []
 for i in range(0, 1000):
-    outputVectors.append([1, 0, 0, 0])
+    outputVectors.append([1, 0, 0, 0, 0, 0, 0, 0, 0])
 
 for i in range(0, 1000):
-    outputVectors.append([0, 1, 0, 0])
+    outputVectors.append([0, 1, 0, 0, 0, 0, 0, 0, 0])
 
 for i in range(0, 1000):
-    outputVectors.append([0, 0, 1, 0])
+    outputVectors.append([0, 0, 1, 0, 0, 0, 0, 0, 0])
 
 for i in range(0, 1000):
-    outputVectors.append([0, 0, 0, 1])
+    outputVectors.append([0, 0, 0, 1, 0, 0, 0, 0, 0])
 
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 1, 0, 0, 0, 0])
 
-# In[ ]:
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 1, 0, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 1, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 0, 1, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 0, 0, 1])
 
 
 testImages = []
 
-#Load Images for swing
+#Load Images From A
 for i in range(0, 100):
-    image = cv2.imread('Dataset/ATest/signA_' + str(i) + '.png')
+    image = cv2.imread('Dataset/AImages/signA_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
-#Load Images for Palm
+#Load Images From B
 for i in range(0, 100):
-    image = cv2.imread('Dataset/BTest/signB_' + str(i) + '.png')
+    image = cv2.imread('Dataset/BImages/signB_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
-#Load Images for Fist
+#Load Images From C
 for i in range(0, 100):
-    image = cv2.imread('Dataset/CTest/signC_' + str(i) + '.png')
+    image = cv2.imread('Dataset/CImages/signC_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
+#Load Images From D
 for i in range(0, 100):
-    image = cv2.imread('Dataset/DTest/signD_' + str(i) + '.png')
+    image = cv2.imread('Dataset/DImages/signD_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(89, 100, 1))
+
+#Load Images From E
+for i in range(0, 100):
+    image = cv2.imread('Dataset/EImages/signE_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(89, 100, 1))
+
+#Load Images From F
+for i in range(0, 100):
+    image = cv2.imread('Dataset/FImages/signF_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(89, 100, 1))
+
+#Load Images From G
+for i in range(0, 100):
+    image = cv2.imread('Dataset/GImages/signG_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(89, 100, 1))
+    
+#Load Images From H
+for i in range(0, 100):
+    image = cv2.imread('Dataset/HImages/signH_' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(89, 100, 1))
+
+#Load Images From I
+for i in range(0, 100):
+    image = cv2.imread('Dataset/IImages/signI_' + str(i) + '.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     testImages.append(gray_image.reshape(89, 100, 1))
 
 testLabels = []
 
 for i in range(0, 100):
-    testLabels.append([1, 0, 0, 0])
+    testLabels.append([1, 0, 0, 0, 0, 0, 0, 0, 0])
 
 for i in range(0, 100):
-    testLabels.append([0, 1, 0, 0])
+    testLabels.append([0, 1, 0, 0, 0, 0, 0, 0, 0])
 
 for i in range(0, 100):
-    testLabels.append([0, 0, 1, 0])
+    testLabels.append([0, 0, 1, 0, 0, 0, 0, 0, 0])
 
 for i in range(0, 100):
-    testLabels.append([0, 0, 0, 1])
+    testLabels.append([0, 0, 0, 1, 0, 0, 0, 0, 0])
 
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 1, 0, 0, 0, 0])
 
-# In[2]:
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 1, 0, 0, 0])
 
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 1, 0, 0])
+
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 0, 1, 0])
+
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 0, 0, 1])
 
 # Define the CNN Model
 tf.compat.v1.reset_default_graph()
@@ -127,15 +207,11 @@ convnet=dropout(convnet,0.75)
 
 
 #TODO: Change the 2nd parameter to number of classes
-convnet=fully_connected(convnet,4,activation='softmax')
+convnet=fully_connected(convnet,9,activation='softmax')
 
 convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
 
 model=tflearn.DNN(convnet,tensorboard_verbose=0)
-
-
-# In[3]:
-
 
 # Shuffle Training Data
 loadedImages, outputVectors = shuffle(loadedImages, outputVectors, random_state=0)
@@ -147,6 +223,3 @@ model.fit(loadedImages, outputVectors, n_epoch=50,
            snapshot_step=100, show_metric=True, run_id='convnet_coursera')
 
 model.save("TrainedModel/GestureRecogModel.tfl")
-
-
-# In[ ]:

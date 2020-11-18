@@ -58,7 +58,6 @@ def main():
     image_num = 0
 
     start_recording = False
-
     # keep looping, until interrupted
     while(True):
         # get the current frame
@@ -105,7 +104,7 @@ def main():
                     if start_recording:
 
                         # Mention the directory in which you wanna store the images followed by the image name
-                        cv2.imwrite("Dataset/DImages/signD_" +
+                        cv2.imwrite("Dataset/ITest/signI_" +
                                     str(image_num) + '.png', thresholded)
                         image_num += 1
                     cv2.imshow("Thresholded", thresholded)
@@ -123,7 +122,7 @@ def main():
             keypress = cv2.waitKey(1) & 0xFF
 
             # if the user pressed "q", then stop looping
-            if keypress == ord("q") or image_num > 999:
+            if keypress == ord("q") or image_num > 99:
                 camera.release()
                 break
 

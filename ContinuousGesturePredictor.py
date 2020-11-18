@@ -138,7 +138,8 @@ def getPredictedClass():
     image = cv2.imread('Temp.png')
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     prediction = model.predict([gray_image.reshape(89, 100, 1)])
-    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3]))
+    return np.argmax(prediction), (np.amax(prediction) / (prediction[0][0] + prediction[0][1] + prediction[0][2] + prediction[0][3] + prediction[0][4] \
+                                                        + prediction[0][5] + prediction[0][6] + prediction[0][7] + prediction[0][8]))
 
 def showStatistics(predictedClass, confidence):
 
@@ -152,7 +153,17 @@ def showStatistics(predictedClass, confidence):
     elif predictedClass == 2:
         className = "Sign C"
     elif predictedClass == 3:
-            className = "Sign D"
+        className = "Sign D"
+    elif predictedClass == 4:
+        className = "Sign E"
+    elif predictedClass == 5:
+        className = "Sign F"
+    elif predictedClass == 6:
+        className = "Sign G"
+    elif predictedClass == 7:
+        className = "Sign H"
+    elif predictedClass == 8:
+        className = "Sign I"
 
     cv2.putText(textImage,"Predicted Class : " + className,
     (30, 30),
@@ -199,7 +210,7 @@ convnet=fully_connected(convnet,1000,activation='relu')
 convnet=dropout(convnet,0.75)
 
 #TODO: change the second parameter to total number of classes
-convnet=fully_connected(convnet,4,activation='softmax')
+convnet=fully_connected(convnet,9,activation='softmax')
 
 convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
 
