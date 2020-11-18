@@ -10,15 +10,15 @@ This is a simple application of Convolution Neural Networks combined with backgr
 
 ## Requirements
 
-Python 3.5-3.8
-pip 20.2.4
-TensorFlow 2.3.1
-tflearn 0.5
-sklearn 0.0
-imutils 0.5.3
-PIllow (PIL) 8.0.1
-OpenCV 4.4.0
-Numpy 1.18.5
+* Python 3.5-3.8
+* pip 20.2.4
+* TensorFlow 2.3.1
+* tflearn 0.5
+* sklearn 0.0
+* imutils 0.5.3
+* Pillow (PIL) 8.0.1
+* OpenCV 4.4.0
+* Numpy 1.18.5
 
 ## File Description
 
